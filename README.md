@@ -11,7 +11,7 @@ Training is given to a person (or people) through training sessions, where anoth
 # Running locally 
 
 You will need: 
-* Django 1.11.1 
+* Django 1.11.17 
 * Python 3.6.1 (and Pip) 
 * Ruby and Rubygems (for Bootstrap 4, Sass and Compass)
 
