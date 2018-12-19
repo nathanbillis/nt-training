@@ -22,16 +22,17 @@ DEBUG = bool(int(os.environ.get('DEBUG'))) if os.environ.get('DEBUG') else True
 if not DEBUG:
     SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 else:
-    SECRET_KEY = 'wi$7j2y_g(x_3et3wl*d0kawd1ud3zbncs7^4s(-!!k+20-lsi'
+    with open('secret_key.txt') as f:
+        SECRET_KEY = f.read().strip()
 
-ALLOWED_HOSTS = ['training.samosborne.me', 'nnt-training.herokuapp.com', 'training.newtheatre.org.uk', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['training.samosborne.me', 'training-york-tech.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     # Training
-    'nt_training.apps.NtTrainingConfig',
+    'ts_training.apps.NtTrainingConfig',
     # Django Default
     'django.contrib.admin',
     'django.contrib.auth',
@@ -175,9 +176,9 @@ LOGGING = {
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 # Auth Settings
-LOGIN_URL = 'nt_training:ntLogin'
-LOGIN_REDIRECT_URL = 'nt_training:ntHome'
-LOGOUT_REDIRECT_URL = 'nt_training:ntHome'
+LOGIN_URL = 'ts_training:ntLogin'
+LOGIN_REDIRECT_URL = 'ts_training:ntHome'
+LOGOUT_REDIRECT_URL = 'ts_training:ntHome'
 
 # Debug toolbar
 # INTERNAL_IPS = ('127.0.0.1')
