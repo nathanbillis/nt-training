@@ -1,7 +1,7 @@
 from django import template
 from django.db import models 
 from django.db.models import Count
-from ..models import Icon, Person, Training_Session, Training_Spec
+from ..models import Icon, Person, TrainingSession, TrainingSpec
 
 register = template.Library() 
 
@@ -12,7 +12,7 @@ def get_user_points(person, dept=None, gotsessions=None):
 	# (avoids counting multiple training sessions as >1 signing offs)
 	if gotsessions == None:
 		# Only if the person's training sessions are not yet a variable
-		personTraining = Training_Session.objects.filter(trainee=person).prefetch_related('trainingId')
+		personTraining = TrainingSession.objects.filter(trainee=person).prefetch_related('trainingId')
 	else:
 		personTraining = gotsessions
 
@@ -42,7 +42,7 @@ def tech_status(person, dept, count=False):
 
 	Future: Be able to filter people who have all of a department signed off.
 	'''
-	allspec = Training_Spec.objects.select_related('category') # Get all training points
+	allspec = TrainingSpec.objects.select_related('category') # Get all training points
 
 	if dept is not None: # Filter to one department?
 		spec_count = allspec.filter(category=dept).count()
@@ -66,9 +66,9 @@ def session_status(session, dept):
 	# Returns a dictionary, statusList, of the number of training points of a given department in the session
 	# that are completed; and the total in the department
 
-	allspec = Training_Spec.objects.select_related('category')
+	allspec = TrainingSpec.objects.select_related('category')
 	spec_count = allspec.filter(category=dept).count() 
-	if type(session) == Training_Session:
+	if type(session) == TrainingSession:
 		session_count = session.objects.filter(category = dept).count() 
 	elif type(session) == models.query.QuerySet:
 		session_count = session.filter(category=dept).count() 
@@ -102,7 +102,7 @@ def training_cards(person=None, form=None, session_boxes=None):
 
 	#Get the data to iterate and compare with 
 	cats = Icon.objects.filter(itemType='CAT').order_by('weight')
-	training = Training_Spec.objects.all().order_by('trainingId').select_related('category')
+	training = TrainingSpec.objects.all().order_by('trainingId').select_related('category')
 
 	if person is not None: 
 		# If we are dealing with a person, look at all the training they have been given
@@ -111,7 +111,7 @@ def training_cards(person=None, form=None, session_boxes=None):
 		# Settings for people:
 		card_settings.update(dict.fromkeys(['counters','colour_bands','modals'], True))
 
-		person_as_trainee = Training_Session.objects.filter(trainee=person).prefetch_related('trainingId')
+		person_as_trainee = TrainingSession.objects.filter(trainee=person).prefetch_related('trainingId')
 		person_achieved_points = [] 
 		for session in person_as_trainee:
 			# For each session, get all the training and add it to the list 
@@ -173,7 +173,7 @@ def training_cards(person=None, form=None, session_boxes=None):
 	Old version:
 
 	if person is not None:
-		personTraining = Training_Session.objects.filter(trainee=person).prefetch_related('trainingId')
+		personTraining = TrainingSession.objects.filter(trainee=person).prefetch_related('trainingId')
 		achievedPoints = []
 		for session in personTraining:
 			allsession = session.trainingId.all() 
@@ -195,7 +195,7 @@ def training_cards(person=None, form=None, session_boxes=None):
 		'training': training, #Training Spec 
 		'achievedPoints': achievedPoints, #List of completed spec items 
 		'person': person, #The person 
-		'sessions': Training_Session.objects.all().prefetch_related('trainingId'), 
+		'sessions': TrainingSession.objects.all().prefetch_related('trainingId'), 
 		'inputForm': inputForm, 
 		'checked': checked, #Checked checkboxes
 	}

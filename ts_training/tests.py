@@ -11,7 +11,7 @@ from django.urls import reverse
 
 
 ############ NNT Training ##########
-from .models import Icon, Person, Training_Spec, Training_Session
+from .models import Icon, Person, TrainingSpec, TrainingSession
 urls = 'ts_training.urls'
 
 # Useful Functions
@@ -27,7 +27,7 @@ def createPerson(first_name,last_name,grad_year):
 	)
 
 def addToSpec(trainingId,category,trainingTitle,description,safety):
-	return Training_Spec.objects.create(
+	return TrainingSpec.objects.create(
 		trainingId = trainingId,
 		category = category,
 		trainingTitle = trainingTitle,
@@ -36,7 +36,7 @@ def addToSpec(trainingId,category,trainingTitle,description,safety):
 	)
 
 def addSession(trainingId,trainer,trainee,date):
-	session = Training_Session.objects.create(trainer=trainer)
+	session = TrainingSession.objects.create(trainer=trainer)
 	session.trainee.add(trainee)
 	session.trainingId.add(trainingId)
 	return session

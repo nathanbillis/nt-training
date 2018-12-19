@@ -4,21 +4,21 @@ from django.db import models
 from django.db.models.functions import Lower
 from django.utils import timezone
 
-# Create your models here.
+# TechSoc Training Models
 
-# NNT Training Models
 
+# Icon Model
 class Icon(models.Model):
 	itemType = models.CharField(
 		max_length=15,
-		choices = (
+		choices=(
 			('PAGE', 'Page'),
 			('CAT', 'Training Category'),
 		),
 	)
 	iconRef = models.CharField(
 		max_length=25,
-		verbose_name = "Icon Code"
+		verbose_name="Icon Code"
 	)
 	iconRef.short_description = "Icon Code"
 	iconName = models.CharField(max_length=25)
@@ -34,25 +34,29 @@ class Icon(models.Model):
 		blank=True,
 		default=None
 	)
+
 	def __str__(self):
 		if self.itemType == 'PAGE':
-			return self.iconName #+ ' (' + str(self.weight) + ')'
+			return self.iconName  # + ' (' + str(self.weight) + ')'
 		elif self.itemType == 'CAT':
 			return str(self.weight) + '. ' + self.iconName
 
+
+# Person / Member of the Society
 class Person(models.Model):
 	first_name = models.CharField(max_length=50)
 	last_name = models.CharField(max_length=50)
-	grad_year = models.IntegerField(null=True,blank=True,)
+	grad_year = models.IntegerField(null=True, blank=True,)
 	committee = models.BooleanField(default=False)
 	email = models.EmailField(
 		null=True,
 		# default=None,
-	 	blank=True,
+		blank=True,
 	)
+
 	status = models.CharField(
-		max_length = 15,
-		choices = (
+		max_length=15,
+		choices =(
 			('GRAD', 'Graduated'),
 			('STU', 'Student'),
 			('UNKNOWN', 'Unknown')
@@ -66,16 +70,18 @@ class Person(models.Model):
 		unique = True,
 	)
 	slug.short_description = "Name"
+
 	def __str__(self):
 		full_name = self.first_name + ' ' + self.last_name
-		#full_name = str.title(full_name)
+		# full_name = str.title(full_name)
 		return full_name
 
 	class Meta:
 		ordering = ['last_name', 'first_name']
 		
 
-class Training_Spec(models.Model):
+# Training Specification
+class TrainingSpec(models.Model):
 	trainingId = models.DecimalField(
 		max_digits = 4,
 		decimal_places = 2,
@@ -91,15 +97,19 @@ class Training_Spec(models.Model):
 		humanTitle = str(self.trainingId) + ' - ' +  self.trainingTitle
 		return humanTitle
 
-Training_Spec.short_description = "Training Specification"
 
-class Training_Session(models.Model):
-	trainingId = models.ManyToManyField(Training_Spec)
+TrainingSpec.short_description = "Training Specification"
+
+
+# Training Sessions
+class TrainingSession(models.Model):
+	trainingId = models.ManyToManyField(TrainingSpec)
 	trainer = models.ForeignKey(Person, on_delete=models.DO_NOTHING, related_name="trainer")
 	trainee = models.ManyToManyField(Person, related_name="trainee")
 	date = models.DateField(
 		default = datetime.date.today
 	)
+
 	def __str__(self):
 		trainees = [] 
 		for person in self.trainee.all():
@@ -108,8 +118,8 @@ class Training_Session(models.Model):
 		string = str.title(self.trainer.first_name + ' ' + self.trainer.last_name) + ' taught ' + ', '.join(map(str,trainees))
 		return string
 
-	def get_absolute_url(self):
-		return reverse('ts_training:ntSessions', kwargs={'pk': self.pk})
+	# def get_absolute_url(self):
+	# 	return reverse('ts_training:ntSessions', kwargs={'pk': self.pk})
 
 	def get_students(self):
 		return self.trainee.all().filter(status='STU')

@@ -8,42 +8,44 @@ app_name = 'ts_training'
 urlpatterns = [
 
 	# Authentication
-	#/login
+
+	# /login
 	url(r'^login/$', views.NTLoginView.as_view(), name='ntLogin'),
-	#/logout
+	# /logout
 	url(r'^logout/$', views.NTLogoutView.as_view(), name='ntLogout'),
-	#/user
+	# /user
 	url(r'^user/done/$', views.NTUserEditDone.as_view(), name='ntUserEditDone'),
 	url(r'^user/$', views.NTUserEdit.as_view(), name='ntUserEdit'),
 
-	#/
+	# /
 	url(r'^$', views.HomeView.as_view(), name='ntHome'),
 
 	# People Views
-	#/people
+	# /people
 	url(r'^people/$', views.PeopleView.as_view(), name='ntPeople'),
-	#/people/slug
+	# /people/slug
 	url(r'^people/(?P<slug>[\w\-]+)/$', views.PersonView.as_view(), name='ntPerson'),
 	
 	# Training Spec Views
-	#/training
+	# /training
 	url(r'^training/$', views.TrainingView.as_view(), name='ntCategory'),
-	#/training/id
+	# /training/id
 	url(r'^training/(?P<pk>[0-9]+)/$', views.TrainingDetailView.as_view(), name='ntTrainingDetail'),
 
 	# Training Session Views
-	#/training/session (List view)
+	# /training/session (List view)
 	url(r'^training/session/$', views.SessionView.as_view(), name='ntSessions'),
-	#/training/session/id (Single view)
+	# /training/session/id (Single view)
 	url(r'^training/session/(?P<pk>[0-9]+)/$', views.SessionSingleView.as_view(), name='ntSessionSingle'),
-	## Login required (handled in views.py)
-	#/training/session/new (Create view)
+
+	#  Login required (handled in views.py)
+	# /training/session/new (Create view)
 	url(r'^training/session/new/$', views.SessionNewView.as_view(), name='ntSessionNew'),
-	#/training/session/id/edit (Update view)
+	# /training/session/id/edit (Update view)
 	url(r'^training/session/(?P<pk>[0-9]+)/edit/$', views.SessionEditView.as_view(), name='ntSessionEdit'),
 
 	# About Page 
-	#/about
+	# /about
 	url(r'^about/$', views.AboutView.as_view(), name='ntAbout'),
 
 ]

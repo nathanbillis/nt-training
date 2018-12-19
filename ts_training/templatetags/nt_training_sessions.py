@@ -1,26 +1,26 @@
 # Tags relating to training sessions primarily.
 
 from django import template
-from ..models import Icon, Person, Training_Session, Training_Spec
+from ..models import Icon, Person, TrainingSession, TrainingSpec
 
 register = template.Library() 
 
 @register.simple_tag
 def person_trainee(person):
 	# Returns a list of training sessions in which the person is a trainee
-	sessions = Training_Session.objects.filter(trainee=person).order_by('date').prefetch_related('trainingId').select_related('trainer')
+	sessions = TrainingSession.objects.filter(trainee=person).order_by('date').prefetch_related('trainingId').select_related('trainer')
 	return sessions
 
 @register.simple_tag
 def person_trained(person):
 	# Returns a list of training sessions in which the person is a trainer
-	trained = Training_Session.objects.filter(trainer=person).order_by('date').prefetch_related('trainingId').prefetch_related('trainee')
+	trained = TrainingSession.objects.filter(trainer=person).order_by('date').prefetch_related('trainingId').prefetch_related('trainee')
 	return trained
 
 @register.simple_tag
 def id_people(spec):
 	# Returns a list of who has trained, and who has been trained (current students only), on a certain training ID
-	sessions = Training_Session.objects.filter(trainingId=spec).prefetch_related('trainee')
+	sessions = TrainingSession.objects.filter(trainingId=spec).prefetch_related('trainee')
 	trainers = []
 	trainees = [] #Set up for population
 	for session in sessions:
@@ -68,6 +68,6 @@ def session_cards(sessions=None):
 	# (also uses session_cats, above, in the inclusion tag)
 	if sessions == None:
 		# If no sessions are given, default to use all of them
-		sessions = Training_Session.objects.all().prefetch_related('trainingId')
+		sessions = TrainingSession.objects.all().prefetch_related('trainingId')
 
 	return {'sessions': sessions}
