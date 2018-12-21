@@ -45,7 +45,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='TrainingSession',
+            name='Training_session',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('date', models.DateField(default=datetime.date.today)),
@@ -67,6 +67,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='training_session',
             name='trainingId',
-            field=models.ManyToManyField(to='ts_training.TrainingSpec'),
+            field=models.ManyToManyField(to='ts_training.Training_spec'),
         ),
     ]

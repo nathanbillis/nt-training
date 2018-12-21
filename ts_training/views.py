@@ -18,7 +18,7 @@ from django.views import generic
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 
 # DB Includes
-from .models import Icon, Person, TrainingSession, TrainingSpec
+from .models import Icon, Person, Training_session, Training_spec
 
 # Forms
 from .forms import SessionForm
@@ -65,29 +65,29 @@ class PersonView(generic.DetailView):
 
 
 class TrainingView(generic.ListView):
-	model = TrainingSpec
+	model = Training_spec
 	template_name = "ts_training/training.html"
 	context_object_name = "training"
 
 
 class TrainingDetailView(generic.DetailView):
 	template_name = "ts_training/training-detail.html"
-	model = TrainingSpec
+	model = Training_spec
 	context_object_name = "item"
 
 
 class SessionView(generic.ListView):
 	template_name = "ts_training/session.html"
-	model = TrainingSession
+	model = Training_session
 
 	def get_queryset(self):
-		sessions = TrainingSession.objects.order_by('-date')
+		sessions = Training_session.objects.order_by('-date')
 		return sessions 
 	context_object_name = "sessions"
 
 
 class SessionSingleView(generic.DetailView):
-	model = TrainingSession
+	model = Training_session
 	template_name = "ts_training/session-single.html"
 
 
@@ -98,7 +98,7 @@ def is_nt_staff(user):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(user_passes_test(is_nt_staff), name='dispatch')
 class SessionNewView(SuccessMessageMixin, CreateView):
-	model = TrainingSession
+	model = Training_session
 	form_class = SessionForm
 	template_name = "ts_training/session-form.html"
 	success_message = "Session created successfully."
@@ -110,7 +110,7 @@ class SessionNewView(SuccessMessageMixin, CreateView):
 @method_decorator(login_required, name='dispatch')
 @method_decorator(user_passes_test(is_nt_staff), name='dispatch')
 class SessionEditView(SuccessMessageMixin, UpdateView):
-	model = TrainingSession
+	model = Training_session
 	form_class = SessionForm
 	template_name = "ts_training/session-form.html"
 	success_message = "Session edited successfully."

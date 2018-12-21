@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -183,3 +185,5 @@ LOGOUT_REDIRECT_URL = 'ts_training:ntHome'
 # Debug toolbar
 # INTERNAL_IPS = ('127.0.0.1')
 # DEBUG_TOOLBAR_PATCH_SETTINGS = True
+
+django_heroku.settings(locals())
