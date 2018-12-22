@@ -22,10 +22,12 @@ DEBUG = bool(int(os.environ.get('DEBUG'))) if os.environ.get('DEBUG') else True
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not DEBUG:
+    SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+else:
+    SECRET_KEY = 'wi$7j2y_g(x_3et3wl*d0kawd1ud3zbncs7^4s(-!!k+20-lsi'
 
-
-ALLOWED_HOSTS = ['training.samosborne.me', 'training-york-tech.herokuapp.com', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['ts-training.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
