@@ -1,6 +1,6 @@
 # Django includes
 from django.contrib import messages, auth
-from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.contrib.auth.views import login 
@@ -92,7 +92,7 @@ class SessionSingleView(generic.DetailView):
 
 
 def is_nt_staff(user):
-	return user.groups.filter(name='NT Staff').exists()
+	return user.is_staff
 
 
 @method_decorator(login_required, name='dispatch')
