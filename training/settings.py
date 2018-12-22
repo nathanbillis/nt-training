@@ -25,12 +25,8 @@ DEBUG = bool(int(os.environ.get('DEBUG'))) if os.environ.get('DEBUG') else True
 if not DEBUG:
     SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 else:
-<<<<<<< HEAD
     SECRET_KEY = 'wi$7j2y_g(x_3et3wl*d0kawd1ud3zbncs7^4s(-!!k+20-lsi'
-=======
-    with open('secret_key.txt') as f:
-        SECRET_KEY = f.read().strip()
->>>>>>> heroku-2018
+
 
 ALLOWED_HOSTS = ['ts-training.herokuapp.com', '127.0.0.1', 'localhost']
 
