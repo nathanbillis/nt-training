@@ -18,7 +18,7 @@ class SessionForm(forms.ModelForm):
 		model = Training_session
 		fields = ['trainer', 'trainee', 'trainingId', 'date']
 		labels = {
-			'trainingId': 'Training Points',
+			'training_id': 'Training Points',
 			'trainee': 'People Trained',
 			'trainer': 'Trainer'
 		}
@@ -30,7 +30,7 @@ class SessionForm(forms.ModelForm):
 
 	def clean(self):
 		trainee = self.cleaned_data.get('trainee')
-		training_id = self.cleaned_data.get('training_id')
+		training_id = self.cleaned_data.get('trainingId')
 		trainer = self.cleaned_data.get('trainer')
 		errors = {}
 		# Can't submit without a valid trainer or date, so don't need to validate those.
