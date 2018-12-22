@@ -11,23 +11,37 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import django_heroku
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG'))) if os.environ.get('DEBUG') else True
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 if not DEBUG:
     SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 else:
-    with open('secret_key.txt') as f:
-        SECRET_KEY = f.read().strip()
-
-ALLOWED_HOSTS = ['training.samosborne.me', 'training-york-tech.herokuapp.com', '127.0.0.1', 'localhost']
+    SECRET_KEY = 'wi$7j2y_g(x_3et3wl*d0kawd1ud3zbncs7^4s(-!!k+20-lsi'
 
 
+ALLOWED_HOSTS = ['ts-training.herokuapp.com', '127.0.0.1', 'localhost']
+
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.9/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 # Application definition
 
 INSTALLED_APPS = [
@@ -183,3 +197,5 @@ LOGOUT_REDIRECT_URL = 'ts_training:ntHome'
 # Debug toolbar
 # INTERNAL_IPS = ('127.0.0.1')
 # DEBUG_TOOLBAR_PATCH_SETTINGS = True
+
+django_heroku.settings(locals())

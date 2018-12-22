@@ -5,7 +5,7 @@ import datetime
 from django import forms 
 from django.urls import reverse
 # #DB
-from .models import Icon, TrainingSpec, Person, TrainingSession
+from .models import Icon, Training_spec, Person, Training_session
 
 
 class DateInput(forms.DateInput):
@@ -13,12 +13,12 @@ class DateInput(forms.DateInput):
 
 
 class SessionForm(forms.ModelForm):
-	# Model: TrainingSession. All of these fields are within this model.
+	# Model: Training_session. All of these fields are within this model.
 	class Meta:
-		model = TrainingSession
+		model = Training_session
 		fields = ['trainer', 'trainee', 'trainingId', 'date']
 		labels = {
-			'trainingId': 'Training Points',
+			'training_id': 'Training Points',
 			'trainee': 'People Trained',
 			'trainer': 'Trainer'
 		}
@@ -30,7 +30,7 @@ class SessionForm(forms.ModelForm):
 
 	def clean(self):
 		trainee = self.cleaned_data.get('trainee')
-		training_id = self.cleaned_data.get('training_id')
+		training_id = self.cleaned_data.get('trainingId')
 		trainer = self.cleaned_data.get('trainer')
 		errors = {}
 		# Can't submit without a valid trainer or date, so don't need to validate those.

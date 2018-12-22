@@ -4,7 +4,7 @@ from django.forms import CheckboxSelectMultiple
 
 # Register your models here.
 
-from .models import Icon, Person, TrainingSession, TrainingSpec
+from .models import Icon, Person, Training_session, Training_spec
 
 
 class PersonAdmin(admin.ModelAdmin):
@@ -69,6 +69,6 @@ class IconAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Person, PersonAdmin)
-admin.site.register(TrainingSession, TrainingSessionAdmin)
-admin.site.register(TrainingSpec, TrainingSpecAdmin)
+admin.site.register(Training_session, TrainingSessionAdmin)
+admin.site.register(Training_spec, TrainingSpecAdmin)
 admin.site.register(Icon, IconAdmin)
