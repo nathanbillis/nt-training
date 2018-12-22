@@ -18,7 +18,7 @@ from django.conf.urls import include,url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^', include('nt_training.urls')),
+    url(r'^', include('ts_training.urls')),
     url(r'^admin/', admin.site.urls),
 ]
 # if settings.DEBUG:
