@@ -7,6 +7,8 @@ Its use over a paper system is not only good for trees, but also serves to be ac
 
 ### Key Idea
 Training is given to a person (or people) through training sessions, where another person is designated trainer. Anyone can be a trainer, but training sessions can only be added by authorised users.
+## Creating Menu Items
+In order to create items in the Menu you'll need to make a new Page Icon type in the Admin Settings. This will add it to the menu bar at the top of the page.
 
 # Running locally 
 

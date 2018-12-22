@@ -11,6 +11,7 @@ from django.utils import timezone
 class Icon(models.Model):
     itemType = models.CharField(
         max_length=15,
+        verbose_name="Item Type",
         choices=(
             ('PAGE', 'Page'),
             ('CAT', 'Training Category'),
@@ -18,11 +19,12 @@ class Icon(models.Model):
     )
     iconRef = models.CharField(
         max_length=25,
-        verbose_name="Icon Code"
+        verbose_name="Font Awesome Icon for Item"
     )
     iconRef.short_description = "Icon Code"
-    iconName = models.CharField(max_length=25)
-    weight = models.IntegerField()
+    iconName = models.CharField(max_length=25,
+                                verbose_name="Item Name")
+    weight = models.IntegerField(verbose_name="Item Number")
     primary = models.BooleanField(default=False)
     description = models.TextField(
         null=True,
@@ -83,14 +85,15 @@ class Person(models.Model):
 # Training Specification
 class Training_spec(models.Model):
     trainingId = models.DecimalField(
+        verbose_name="Spec ID Number",
         max_digits = 4,
         decimal_places = 2,
         unique = True,
     )
-    category = models.ForeignKey(
-        Icon,
+    category = models.ForeignKey(Icon,
         limit_choices_to={'itemType': 'CAT'})
-    trainingTitle = models.CharField(max_length=50)
+    trainingTitle = models.CharField(verbose_name="Training Title",
+                                     max_length=50)
     description = models.TextField(default="Provide a useful description")
     safety = models.BooleanField(default=False)
 
