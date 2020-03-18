@@ -110,6 +110,7 @@ class Training_session(models.Model):
     trainingId = models.ManyToManyField(Training_spec)
     trainer = models.ForeignKey(Person, on_delete=models.DO_NOTHING, related_name="trainer")
     trainee = models.ManyToManyField(Person, related_name="trainee")
+    occured = models.BooleanField(default=False)
     date = models.DateField(
         default = datetime.date.today
     )
@@ -129,3 +130,13 @@ class Training_session(models.Model):
 
     def get_students(self):
         return self.trainee.all().filter(status='STU')
+
+#Upcoming session
+#class Planned_session(models.Model):
+#    plannedID = models.ManyToManyField(Training_spec)
+#    lead = models.ForeignKey(Person, on_delete=models.DO_NOTHING, related_name="lead")
+#    slots = models.IntegerField()
+#    #trainee = models.ManyToManyField(Person, related_name="trainee")
+#    date = models.DateField(
+#        default = datetime.date.today
+#    )

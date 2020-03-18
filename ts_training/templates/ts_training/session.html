@@ -1,14 +1,14 @@
 {% extends 'ts_training/base.html' %}
 {% load nt_navbar %}
 {% load nt_training_sessions %}
-{% block title %}Sessions{% endblock %}
+{% block title %}Upcoming Sessions{% endblock %}
 
 {% block content %}
-	<h1 class="text-center">Training Sessions</h1>
-	{% if user.is_authenticated %}
+    <h1 class="text-center">Upcoming Training Sessions</h1>
+    {% if user.is_authenticated %}
 		<div class="row mb-2">
 			<div class="col-12">
-				<a role="button" href="{% url 'ts_training:ntSessionNew' %}" class="btn btn-primary float-right"><i class="fa fa-fw fa-plus"></i> New Training Session</a>
+				<a role="button" href="{% url 'ts_training:ntSessionNew' %}" class="btn btn-primary float-right"><i class="fa fa-fw fa-plus"></i> Plan New Session</a>
 			</div>
 		</div>
 	{% endif %}
@@ -16,7 +16,7 @@
 	<div class="row">
 		<div class="col">
 			{% if not sessions %}
-				<p class="text-center text-muted"><i class="fa fa-info-circle fa-fw"></i> No training sessions.</p>
+				<p class="text-center text-muted"><i class="fa fa-info-circle fa-fw"></i> No upcoming training sessions.</p>
 			{% else %}
 				{% session_cards sessions %}
 			{% endif %}

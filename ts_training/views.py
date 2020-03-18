@@ -1,3 +1,4 @@
+import datetime
 # Django includes
 from django.contrib import messages, auth
 from django.contrib.auth.models import User
@@ -81,7 +82,8 @@ class SessionView(generic.ListView):
 	model = Training_session
 
 	def get_queryset(self):
-		sessions = Training_session.objects.order_by('-date')
+		today = datetime.date.today()
+		sessions = Training_session.objects.filter(date__gte=today).order_by('-date')
 		return sessions 
 	context_object_name = "sessions"
 
@@ -117,6 +119,15 @@ class SessionEditView(SuccessMessageMixin, UpdateView):
 
 	def get_success_url(self):
 		return reverse_lazy('ts_training:ntSessionSingle', kwargs={'pk': self.object.pk})
+
+class allSessionView(generic.ListView):
+	model = Training_session
+	template_name = "ts_training/all-session.html"
+	def get_queryset(self):
+		today = datetime.date.today()
+		sessions = Training_session.objects.order_by('-date')
+		return sessions 
+	context_object_name = "sessions"
 
 
 # Auth Views

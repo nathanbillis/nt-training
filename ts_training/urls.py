@@ -38,6 +38,10 @@ urlpatterns = [
 	# /training/session/id (Single view)
 	url(r'^training/session/(?P<pk>[0-9]+)/$', views.SessionSingleView.as_view(), name='ntSessionSingle'),
 
+	#Upcoming Training Views
+	#/training/session (List View)
+	url(r'^training/session/all/$', views.allSessionView.as_view(), name='all'),
+
 	#  Login required (handled in views.py)
 	# /training/session/new (Create view)
 	url(r'^training/session/new/$', views.SessionNewView.as_view(), name='ntSessionNew'),

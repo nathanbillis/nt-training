@@ -55,7 +55,7 @@ class TrainingSpecAdmin(admin.ModelAdmin):
 
 
 class TrainingSessionAdmin(admin.ModelAdmin):
-	list_display = ['pk','trainer', '__str__', 'date',]
+	list_display = ['pk','trainer', '__str__', 'date', 'occured',]
 	formfield_overrides = {
 		models.ManyToManyField: {'widget': CheckboxSelectMultiple},
 	}
