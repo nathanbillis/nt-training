@@ -193,6 +193,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 LOGIN_URL = 'ts_training:ntLogin'
 LOGIN_REDIRECT_URL = 'ts_training:ntHome'
 LOGOUT_REDIRECT_URL = 'ts_training:ntHome'
+#Custom user Model
+AUTH_USER_MODEL = 'ts_training.Person'
 
 # Debug toolbar
 # INTERNAL_IPS = ('127.0.0.1')

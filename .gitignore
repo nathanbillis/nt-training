@@ -24,3 +24,13 @@ venv/
 ehthumbs.db
 Thumbs.db
 secret_key\.txt
+
+bin/
+
+include/
+
+lib/
+
+share/
+
+.vscode/
