@@ -8,7 +8,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
 from ts_training.models import Person
 
-from .models import Icon, Person, Training_session, Training_spec
+from .models import Icon, Person, Training_session, Training_spec, Planned_session
 
 ## This section deals with the custom User type
 # User Forms
@@ -105,7 +105,7 @@ class TrainingSpecAdmin(admin.ModelAdmin):
 
 
 class TrainingSessionAdmin(admin.ModelAdmin):
-	list_display = ['pk','trainer', '__str__', 'date', 'occured',]
+	list_display = ['trainer', '__str__', 'date', ]
 	formfield_overrides = {
 		models.ManyToManyField: {'widget': CheckboxSelectMultiple},
 	}
@@ -117,10 +117,18 @@ class IconAdmin(admin.ModelAdmin):
 	list_display = ['itemType', 'weight', 'iconName', 'iconRef']
 	list_filter = ['itemType']
 
+class PlannedAdmin(admin.ModelAdmin):
+	list_display = ['date', 'slots', ]
+	formfield_overrides = {
+		models.ManyToManyField: {'widget': CheckboxSelectMultiple},
+	}
+	list_filter = ['date']
+
 
 admin.site.register(Person, PersonAdmin)
 admin.site.register(Training_session, TrainingSessionAdmin)
 admin.site.register(Training_spec, TrainingSpecAdmin)
 admin.site.register(Icon, IconAdmin)
+admin.site.register(Planned_session, PlannedAdmin)
 #Groups are not needed due to custom User type
 admin.site.unregister(Group)

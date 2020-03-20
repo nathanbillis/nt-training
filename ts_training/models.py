@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils import timezone
 
 # TechSoc Training Models
 
@@ -176,23 +177,37 @@ class Training_session(models.Model):
     trainingId = models.ManyToManyField(Training_spec)
     trainer = models.ForeignKey(Person, on_delete=models.DO_NOTHING, related_name="trainer")
     trainee = models.ManyToManyField(Person, related_name="trainee")
-    occured = models.BooleanField(default=False)
     date = models.DateField(
         default = datetime.date.today
     )
 
-    @property
-    def __str__(self):
-        trainees = []
-        for person in self.trainee.all():
-            name = str.title(person.first_name) + ' ' + (str.title(person.last_name))
-            trainees.append(name)
-        string = str.title(self.trainer.first_name + ' ' + self.trainer.last_name) + ' taught ' \
-                 + ', '.join(map(str, trainees))
-        return string
+    #@property
+    #def __str__(self):
+    #    trainees = []
+    #    for person in self.trainee.all():
+    #        name = str.title(person.first_name) + ' ' + (str.title(person.last_name))
+    #        trainees.append(name)
+    #    string = str.title(self.trainer.first_name + ' ' + self.trainer.last_name) + ' taught ' \
+    #             + ', '.join(map(str, trainees))
+    #    return string
 
     # def get_absolute_url(self):
     # 	return reverse('ts_training:ntSessions', kwargs={'pk': self.pk})
 
     def get_students(self):
         return self.trainee.all().filter(status='STU')
+
+#Planned Session
+class Planned_session(models.Model):
+    trainingId = models.ManyToManyField(Training_spec)
+    trainer = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
+    slots = models.IntegerField(default=0)
+    date = models.DateTimeField(
+        default = timezone.now
+    )
+
+    #@property
+    #def __str__(self):
+    #    words = 'Session has ' #+ str(self.slots)  + ' slots available on ' + str(self.date)
+    #    return words
+    
