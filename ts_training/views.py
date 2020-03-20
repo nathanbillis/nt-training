@@ -19,10 +19,10 @@ from django.views import generic
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 
 # DB Includes
-from .models import Icon, Person, Training_session, Training_spec
+from .models import Icon, Person, Training_session, Training_spec, Planned_session
 
 # Forms
-from .forms import SessionForm
+from .forms import SessionForm, PlanForm
 
 # NNT Training Views
 
@@ -76,14 +76,13 @@ class TrainingDetailView(generic.DetailView):
 	model = Training_spec
 	context_object_name = "item"
 
-
 class SessionView(generic.ListView):
 	template_name = "ts_training/session.html"
 	model = Training_session
 
 	def get_queryset(self):
 		today = datetime.date.today()
-		sessions = Training_session.objects.filter(date__gte=today).order_by('-date')
+		sessions = Training_session.objects.order_by('-date')
 		return sessions 
 	context_object_name = "sessions"
 
@@ -96,18 +95,16 @@ class SessionSingleView(generic.DetailView):
 def is_nt_staff(user):
 	return user.is_staff
 
-
-@method_decorator(login_required, name='dispatch')
-@method_decorator(user_passes_test(is_nt_staff), name='dispatch')
-class SessionNewView(SuccessMessageMixin, CreateView):
-	model = Training_session
-	form_class = SessionForm
-	template_name = "ts_training/session-form.html"
-	success_message = "Session created successfully."
-
-	def get_success_url(self):
-		return reverse_lazy('ts_training:ntSessionSingle', kwargs={'pk': self.object.pk })
-
+#@method_decorator(login_required, name='dispatch')
+#@method_decorator(user_passes_test(is_nt_staff), name='dispatch')
+#class SessionNewView(SuccessMessageMixin, CreateView):
+#	model = Training_session
+#	form_class = SessionForm
+#	template_name = "ts_training/session-form.html"
+#	success_message = "Session created successfully."
+#
+#	def get_success_url(self):
+#		return reverse_lazy('ts_training:ntSessionSingle', kwargs={'pk': self.object.pk })
 
 @method_decorator(login_required, name='dispatch')
 @method_decorator(user_passes_test(is_nt_staff), name='dispatch')
@@ -120,15 +117,44 @@ class SessionEditView(SuccessMessageMixin, UpdateView):
 	def get_success_url(self):
 		return reverse_lazy('ts_training:ntSessionSingle', kwargs={'pk': self.object.pk})
 
-class allSessionView(generic.ListView):
-	model = Training_session
-	template_name = "ts_training/all-session.html"
+## Plans
+
+class PlanView(generic.ListView):
+	model = Planned_session
+	template_name = "ts_training/planned.html"
+
 	def get_queryset(self):
 		today = datetime.date.today()
-		sessions = Training_session.objects.order_by('-date')
+		sessions = Planned_session.objects.order_by('-date')
 		return sessions 
 	context_object_name = "sessions"
 
+class PlanSingleView(generic.DetailView):
+	model = Planned_session
+	template_name = "ts_training/plan-single.html"
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_passes_test(is_nt_staff), name='dispatch')
+class PlanNewView(SuccessMessageMixin, CreateView):
+	model = Planned_session
+	form_class = PlanForm
+	template_name = "ts_training/plan-form.html"
+	success_message = "Session created successfully."
+
+	def get_success_url(self):
+		return reverse_lazy('ts_training:ntSessionSingle', kwargs={'pk': self.object.pk })
+
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_passes_test(is_nt_staff), name='dispatch')
+class PlanEditView(SuccessMessageMixin, UpdateView):
+	model = Planned_session
+	form_class = SessionForm
+	template_name = "ts_training/plan-form.html"
+	success_message = "Session edited successfully."
+
+	def get_success_url(self):
+		return reverse_lazy('ts_training:ntPlanSingle', kwargs={'pk': self.object.pk})
 
 # Auth Views
 

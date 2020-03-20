@@ -38,15 +38,21 @@ urlpatterns = [
 	# /training/session/id (Single view)
 	url(r'^training/session/(?P<pk>[0-9]+)/$', views.SessionSingleView.as_view(), name='ntSessionSingle'),
 
-	#Upcoming Training Views
-	#/training/session (List View)
-	url(r'^training/session/all/$', views.allSessionView.as_view(), name='all'),
-
 	#  Login required (handled in views.py)
 	# /training/session/new (Create view)
-	url(r'^training/session/new/$', views.SessionNewView.as_view(), name='ntSessionNew'),
+#	url(r'^training/session/new/$', views.SessionNewView.as_view(), name='ntSessionNew'),
 	# /training/session/id/edit (Update view)
 	url(r'^training/session/(?P<pk>[0-9]+)/edit/$', views.SessionEditView.as_view(), name='ntSessionEdit'),
+
+	# /training/plan (List view)
+	url(r'^training/plan/$', views.PlanView.as_view(), name='ntPlan'),
+	# /training/plan/id (single View)
+	url(r'^training/plan/(?P<pk>[0-9]+)/$', views.PlanSingleView.as_view(), name='ntPlanSingle'),
+
+	# /training/plan/new
+	url(r'^training/plan/new/$', views.PlanNewView.as_view(), name='ntPlanNew'),
+	# /training/plan/id/edit
+	url(r'^training/plan/(?P<pk>[0-9]+)/edit/$', views.PlanEditView.as_view(), name='ntPlanEdit'),
 
 	# About Page 
 	# /about
