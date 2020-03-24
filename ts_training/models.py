@@ -158,7 +158,7 @@ class Training_spec(models.Model):
         unique = True,
     )
     category = models.ForeignKey(Icon,
-        limit_choices_to={'itemType': 'CAT'})
+        limit_choices_to={'itemType': 'CAT'}, on_delete=models.CASCADE)
     trainingTitle = models.CharField(verbose_name="Training Title",
                                      max_length=50)
     description = models.TextField(default="Provide a useful description")
