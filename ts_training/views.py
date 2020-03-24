@@ -4,7 +4,7 @@ from django.contrib import messages, auth
 from django.contrib.auth.models import User
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.signals import user_logged_in, user_logged_out
-from django.contrib.auth.views import login 
+from django.contrib.auth.views import LoginView 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models.functions import Lower
@@ -23,7 +23,7 @@ from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteVi
 from .models import Icon, Person, Training_session, Training_spec, Planned_session
 
 # Forms
-from .forms import SessionForm, PlanForm, SignupForm
+from .forms import SessionForm, PlanForm
 
 # NNT Training Views
 
