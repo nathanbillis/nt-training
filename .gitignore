@@ -27,7 +27,7 @@ secret_key\.txt
 
 bin/
 
-include/
+/include/
 
 lib/
 

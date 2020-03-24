@@ -16,13 +16,14 @@ from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import generic
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
 
 # DB Includes
 from .models import Icon, Person, Training_session, Training_spec, Planned_session
 
 # Forms
-from .forms import SessionForm, PlanForm
+from .forms import SessionForm, PlanForm, SignupForm
 
 # NNT Training Views
 
@@ -133,6 +134,12 @@ class PlanSingleView(generic.DetailView):
 	model = Planned_session
 	template_name = "ts_training/plan-single.html"
 
+##REMOVE?
+	def signup(request, pk):
+		session = Planned_session.object.get(pk=pk)
+		session.signup_member(request.user)
+		return reverse_lazy('ts_training:ntPlan')
+
 @method_decorator(login_required, name='dispatch')
 @method_decorator(user_passes_test(is_nt_staff), name='dispatch')
 class PlanNewView(SuccessMessageMixin, CreateView):
@@ -149,7 +156,7 @@ class PlanNewView(SuccessMessageMixin, CreateView):
 @method_decorator(user_passes_test(is_nt_staff), name='dispatch')
 class PlanEditView(SuccessMessageMixin, UpdateView):
 	model = Planned_session
-	form_class = SessionForm
+	form_class = PlanForm
 	template_name = "ts_training/plan-form.html"
 	success_message = "Session edited successfully."
 

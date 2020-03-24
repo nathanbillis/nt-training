@@ -76,3 +76,13 @@ class PlanForm(forms.ModelForm):
 			return self.cleaned_data
 		
 		# return self.cleaned_data
+
+#class SignupForm(forms.ModelForm):
+#
+#	class Meta:
+#		model = Planned_session
+#		fields = ['signed_up']
+#		widgets = {
+#			'signed_up': forms.CheckboxSelectMultiple()
+#		}
+#

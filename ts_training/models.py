@@ -191,8 +191,8 @@ class Training_session(models.Model):
     #             + ', '.join(map(str, trainees))
     #    return string
 
-    # def get_absolute_url(self):
-    # 	return reverse('ts_training:ntSessions', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+     	return reverse('ts_training:ntSessions', kwargs={'pk': self.pk})
 
     def get_students(self):
         return self.trainee.all().filter(status='STU')
@@ -201,13 +201,18 @@ class Training_session(models.Model):
 class Planned_session(models.Model):
     trainingId = models.ManyToManyField(Training_spec)
     trainer = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
-    slots = models.IntegerField(default=0)
+    slots = models.IntegerField(default=0, verbose_name="Available Slots")
     date = models.DateTimeField(
         default = timezone.now
     )
+    signed_up = models.ManyToManyField(Person, related_name="signed_up")
 
+    ##REMOVE?
+    def signup_member(self, user, pk):
+        signup = Planned_session.objects.get(pk = pk)
+        signup.signed_up += user
     #@property
     #def __str__(self):
-    #    words = 'Session has ' #+ str(self.slots)  + ' slots available on ' + str(self.date)
+    #    words = 'Session has ' + str(self.slots)  + ' slots available on ' + str(self.date)
     #    return words
     

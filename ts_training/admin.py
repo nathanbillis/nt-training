@@ -118,7 +118,7 @@ class IconAdmin(admin.ModelAdmin):
 	list_filter = ['itemType']
 
 class PlannedAdmin(admin.ModelAdmin):
-	list_display = ['date', 'slots', ]
+	list_display = ['date', '__str__', 'slots', ]
 	formfield_overrides = {
 		models.ManyToManyField: {'widget': CheckboxSelectMultiple},
 	}
