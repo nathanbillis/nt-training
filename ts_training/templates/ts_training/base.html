@@ -204,6 +204,18 @@
 					});
 				});
 			</script>
+			<script>
+				$(document).ready(function () {
+					$("#trainingPointsClear").click(function () {
+						$('input[id^="id_trainingId_"]:checked').prop('checked',false);
+					});
+					$("#signupClear").click(function () {
+						$('input[id^="id_signed_up_"]:checked').prop('checked',false);
+						$(".button-checkbox.active").removeClass("active"); // Remove .active class 
+						$(".button-checkbox-icon.fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");; // Remove .active class 
+					});
+				});
+			</script>
 			<!-- Form: Select all for a category -->
 			<script>
 				$(document).ready(function (){
@@ -239,6 +251,34 @@
 			</script>
 			<script>
 				$('input[name="trainee"]').change(function(){
+					// Add .active when the checked status changes 
+				    if($(this).is(':checked')) {
+				    	// Box gets checked
+				      $(this).closest(".button-checkbox").addClass('active');
+				      $(this).closest(".person-checkbox").nextAll(".fa-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");
+				    } else {
+				    	// Unchecked 
+				      $(this).closest(".button-checkbox").removeClass('active');
+				      $(this).closest(".person-checkbox").nextAll(".fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");
+				    }
+				});
+			</script>
+			<script>
+				$(document).ready(function () { 
+					// Go through and add .active to the initially checked boxes 
+					checkboxes = document.getElementsByName("signed_up");
+					checkedboxes = [];
+					for (var i=0; i<checkboxes.length; i++){
+						if (checkboxes[i].checked) {
+							checkedboxes.push(checkboxes[i]);
+							$(checkboxes[i]).closest(".button-checkbox").addClass('active');
+							$(checkboxes[i]).closest(".person-checkbox").nextAll(".button-checkbox-icon").addClass("fa-check-circle-o").removeClass("fa-circle-o");
+						}
+					}
+				});
+			</script>
+			<script>
+				$('input[name="signed_up"]').change(function(){
 					// Add .active when the checked status changes 
 				    if($(this).is(':checked')) {
 				    	// Box gets checked

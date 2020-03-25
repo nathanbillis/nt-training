@@ -205,12 +205,7 @@ class Planned_session(models.Model):
     date = models.DateTimeField(
         default = timezone.now
     )
-    signed_up = models.ManyToManyField(Person, related_name="signed_up")
-
-    ##REMOVE?
-    def signup_member(self, user, pk):
-        signup = Planned_session.objects.get(pk = pk)
-        signup.signed_up += user
+    signed_up = models.ManyToManyField(Person, related_name="signed_up", blank=True)
     #@property
     #def __str__(self):
     #    words = 'Session has ' + str(self.slots)  + ' slots available on ' + str(self.date)

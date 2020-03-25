@@ -14,7 +14,7 @@ def ordered_set(seq):
 @register.simple_tag
 def person_trained(person):
 	# Returns a list of training sessions in which the person is a trainer
-	trained = Planned_session.objects.filter(trainer=person).order_by('date').prefetch_related('trainingId').prefetch_related('trainee')
+	trained = Planned_session.objects.filter(trainer=person).order_by('date').prefetch_related('trainingId').prefetch_related('signed_up')
 	return trained
 
 @register.simple_tag

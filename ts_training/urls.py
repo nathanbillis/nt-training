@@ -54,6 +54,9 @@ urlpatterns = [
 	# /training/plan/id/edit
 	url(r'^training/plan/(?P<pk>[0-9]+)/edit/$', views.PlanEditView.as_view(), name='ntPlanEdit'),
 
+	# /training/plan/signup
+	url(r'^training/plan/signup/(?P<pk>[0-9]+)/$', views.SignupView.as_view(), name='ntSignup'),
+
 	# About Page 
 	# /about
 	url(r'^about/$', views.AboutView.as_view(), name='ntAbout'),

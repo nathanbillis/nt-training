@@ -34,67 +34,20 @@
 		</div>
 		<div class="card-body">
 			<div class="row mb-4">
-				<div class="col">
-					<div class="card">
-						<div class="card-header bg-primary">
-							<h4><i class="fa fa-fw fa-info nt-orange"></i> Session Info</h4>
-						</div>
-						<div class="card-body">
-							<div class="row text-center text-sm-left">
-								<div class="col-12 col-sm-6">
-									<h5>Training Lead: <span class="small">{% render_field form.trainer class+="custom-select" %}</span></h5>
-								</div>
-								<div class="col-12 col-sm-6 text-md-right">
-									<h5>Date: {% render_field form.date class+="form-control" %}</h5>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row mb-4">
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header bg-primary">
-							<span class="h4"><i class="fa fa-fw fa-list nt-orange"></i> Training Points</span>
-							<a class="btn btn-danger float-sm-right" id="trainingPointsClear"><i class="fa fa-times-circle fa-fw"></i>&nbsp;Clear <span class="d-none d-md-inline">Selection</span></a>
+							<h4><i class="fa fa-fw fa-users nt-orange"></i> Sign Up</h4>
 						</div>
 						<div class="card-body">
-							{% training_cards form=form %}
+							<p>You are signing up for a training session on {{ object.date }}. Please check your name and confirm with the Submit button</p>
+							{% all_people as people %}
+							{% include 'ts_training/include/planned-people-list.html' %}
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="row mb-4">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-header bg-primary">
-							<h4><i class="fa fa-fw fa-users nt-orange"></i> Signed Up Members</h4>
-						</div>
-						<div class="card-body">
-							<div class="col-12">
-								{% with object.signed_up.all as people %}
-									{% if people is None %}
-										<p> Noone has signed up yet!</p>
-									{% else %}
-										<!-- People -->
-										<div class="row" id="peopleList">
-											{% for person in people %}
-												<div class="col-xl-3 col-lg-4 col-6 button-people person-{{ person.status }} {% if person.committee == True %}person-committee{% endif %}">
-													<a href="{% url 'ts_training:ntPerson' person.slug %}" class="btn btn-primary btn-block">
-														<h6 class="lead"><i class="fa fa-fw {% if person.status == 'GRAD' %}fa-graduation-cap{% elif person.committee == True %}fa-committee fa-star{% else %}fa-user{% endif %} float-md-left mt-md-1"></i>&nbsp;{{ person }}</h6>
-													</a>
-												</div>												
-											{% endfor %}
-										</div>
-									{% endif %}
-								{% endwith %}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+		{% if user.is_staff %}
 		<div class="card-footer bg-primary">
 			<div class="row">
 				<div class="col-sm-8 col-4">
@@ -105,6 +58,7 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</div>
 </form>
 

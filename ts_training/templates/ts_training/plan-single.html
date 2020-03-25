@@ -72,30 +72,36 @@
 								<h4><i class="fa fa-fw fa-users nt-orange"></i> Signed Up People</h4>
 							</div>
 							<div class="card-body">
-									{% with object.signed_up.all as people %}
-										{% include 'ts_training/include/planned-people-list.html' %}
-									{% endwith %}
+								{% with object.signed_up.all as people %}
+									{% include 'ts_training/include/planned-people-list.html' %}
+								{% endwith %}
 							</div>
 						</div>
 					</div>
 				</div>
 			{% endif %}
-			{% if not user in object.signed_up.all%}
-				{% if not user == object.trainer %}
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-header bg-primary">
-										<h4><i class="fa fa-fw fa-users nt-orange"></i> Sign Up</h4>
-									</div>
-									<div class="card-body">
-										<a href="#" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-clipboard"></i> <span class="d-sm-none d-lg-inline">Sign Up</span></a>
-									</div>
-								</div>
-							</div>
+			
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h4><i class="fa fa-fw fa-users nt-orange"></i> Sign Up</h4>
 						</div>
-				{% endif %}
-			{% endif %}
+						<div class="card-body">
+							{% if not user in object.signed_up.all%}
+								{% if not user == object.trainer %}
+									<a href="#" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-clipboard"></i> <span class="d-sm-none d-lg-inline">Sign Up</span></a>
+								{% else %}
+									<p> You are the trainer for this Session, and so cannot sign up</p>
+								{% endif %}
+							{% else %}
+								<p> You are already signed up to this session</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+				
 		</div>
 	</div>
 {% endblock %}

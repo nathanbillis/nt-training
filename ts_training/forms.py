@@ -52,15 +52,21 @@ class PlanForm(forms.ModelForm):
 	# Model: Planned_session. All of these fields are within this model.
 	class Meta:
 		model = Planned_session
-		fields = ['trainer', 'trainingId', 'date']
+		fields = ['trainer', 'trainingId', 'date', 'signed_up',]
 		labels = {
-			'training_id': 'Training Points',
-			'trainer': 'Trainer'
+			'trainingId': 'Training Points',
+			'trainer': 'Trainer',
+			'signed_up': 'Sign Up',
 		}
 		widgets = {
 			'date': DateInput(),
 			'trainingId': forms.CheckboxSelectMultiple(),
+			'signed_up': forms.CheckboxSelectMultiple(),
 		}
+
+	def __init__(self, *args, **kwargs):
+		super(PlanForm, self).__init__(*args, **kwargs)
+		self.fields['signed_up'].required = False
 
 	def clean(self):
 		training_id = self.cleaned_data.get('trainingId')
@@ -77,12 +83,11 @@ class PlanForm(forms.ModelForm):
 		
 		# return self.cleaned_data
 
-#class SignupForm(forms.ModelForm):
-#
-#	class Meta:
-#		model = Planned_session
-#		fields = ['signed_up']
-#		widgets = {
-#			'signed_up': forms.CheckboxSelectMultiple()
-#		}
-#
+class SignupForm(forms.ModelForm):
+
+	class Meta:
+		model = Planned_session
+		fields = ['signed_up']
+		widgets = {
+			'signed_up': forms.CheckboxSelectMultiple()
+		}
