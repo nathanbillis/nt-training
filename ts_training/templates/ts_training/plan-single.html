@@ -41,10 +41,13 @@
 						</div>
 						<div class="card-body">
 							<div class="row text-center text-sm-left">
-								<div class="col-12 col-sm-6">
+								<div class="col-12 col-sm-4">
 									<h5>Training Lead: <a href="{% url 'ts_training:ntPerson' object.trainer.slug %}">{{ object.trainer }}</a></h5>
 								</div>
-								<div class="col-12 col-sm-6 text-md-right">
+								<div class="col-12 col-sm-4">
+									<h5>Available Slots: {{object.slots}}</h5>
+								</div>
+								<div class="col-12 col-sm-4 text-md-right">
 									<h5>Date: {{ object.date }}</h5>
 								</div>
 							</div>
@@ -73,26 +76,39 @@
 							</div>
 							<div class="card-body">
 								{% with object.signed_up.all as people %}
-									{% include 'ts_training/include/planned-people-list.html' %}
+									{% if people is None %}
+										<p> Noone has signed up yet!</p>
+									{% else %}
+										<!-- People -->
+										<div class="row" id="peopleList">
+											{% for person in people %}
+												<div class="col-xl-3 col-lg-4 col-6 button-people person-{{ person.status }} {% if person.committee == True %}person-committee{% endif %}">
+													<a href="{% url 'ts_training:ntPerson' person.slug %}" class="btn btn-primary btn-block">
+														<h6 class="lead"><i class="fa fa-fw {% if person.status == 'GRAD' %}fa-graduation-cap{% elif person.committee == True %}fa-committee fa-star{% else %}fa-user{% endif %} float-md-left mt-md-1"></i>&nbsp;{{ person }}</h6>
+													</a>
+												</div>												
+											{% endfor %}
+										</div>
+									{% endif %}
 								{% endwith %}
 							</div>
 						</div>
 					</div>
 				</div>
 			{% endif %}
-			
+			{% if not user == object.trainer %}
 			<div class="row">
 				<div class="col-12">
 					<div class="card">
 						<div class="card-header bg-primary">
 							<h4><i class="fa fa-fw fa-users nt-orange"></i> Sign Up</h4>
 						</div>
-						<div class="card-body">
+						<div class="card-body mx-auto">
 							{% if not user in object.signed_up.all%}
-								{% if not user == object.trainer %}
-									<a href="#" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-clipboard"></i> <span class="d-sm-none d-lg-inline">Sign Up</span></a>
+								{% if object.slots > 0 %}
+									<a href="{% url 'ts_training:ntSignup' object.pk %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-clipboard"></i> <span class="d-sm-none d-lg-inline">Sign Up</span></a>
 								{% else %}
-									<p> You are the trainer for this Session, and so cannot sign up</p>
+									<p>This training session is full. Please sign up for another session.</p>
 								{% endif %}
 							{% else %}
 								<p> You are already signed up to this session</p>
@@ -101,7 +117,9 @@
 					</div>
 				</div>
 			</div>
-				
+			{% else %}
+
+			{% endif %}	
 		</div>
 	</div>
 {% endblock %}

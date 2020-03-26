@@ -29,7 +29,10 @@ From nt_spec.py:
 					<span><a href="#{{ dept|slugify }}" title="{{ dept|slugify }}" class="filter badge badge-secondary">{{ dept|title }}</a>&nbsp;</span>
 				{% endfor %}
 			</p>
-			<p><i class="fa fa-exclamation-circle text-danger" aria-label="Exclamation point" title="Safety critical"></i> Training points with an exclamation point are safety-critical. As well as meaning more care is taken during training, they may only be signed off after a period of working under supervision.</p>
+			<p style="text-align: center;">
+				<i class="fa fa-exclamation-circle text-danger" aria-label="Exclamation point" title="Safety critical"></i> 
+				Training points with an exclamation point are safety-critical. As well as meaning more care is taken during training, they may only be signed off after a period of working under supervision.
+			</p>
 		</div>
 	</div>
 

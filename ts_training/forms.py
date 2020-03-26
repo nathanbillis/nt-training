@@ -52,7 +52,7 @@ class PlanForm(forms.ModelForm):
 	# Model: Planned_session. All of these fields are within this model.
 	class Meta:
 		model = Planned_session
-		fields = ['trainer', 'trainingId', 'date', 'signed_up',]
+		fields = ['trainer', 'trainingId', 'date', 'signed_up', 'slots']
 		labels = {
 			'trainingId': 'Training Points',
 			'trainer': 'Trainer',
@@ -87,7 +87,14 @@ class SignupForm(forms.ModelForm):
 
 	class Meta:
 		model = Planned_session
-		fields = ['signed_up']
+		fields = ['signed_up', 'slots']
 		widgets = {
-			'signed_up': forms.CheckboxSelectMultiple()
+			'signed_up': forms.CheckboxSelectMultiple(),
 		}
+	
+	slots = forms.IntegerField(widget=forms.HiddenInput, required=False)
+
+	def clean(self):
+		cleaned_data = super(SignupForm, self).clean()
+		self.instance.slots = self.instance.slots - 1
+		return cleaned_data

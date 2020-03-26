@@ -7,6 +7,7 @@ from django.contrib.auth.signals import user_logged_in, user_logged_out
 from django.contrib.auth.views import LoginView 
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import F
 from django.db.models.functions import Lower
 from django.forms.models import modelformset_factory
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -147,6 +148,7 @@ class PlanNewView(SuccessMessageMixin, CreateView):
 
 
 @method_decorator(login_required, name='dispatch')
+@method_decorator(user_passes_test(is_nt_staff), name='dispatch')
 class PlanEditView(SuccessMessageMixin, UpdateView):
 	model = Planned_session
 	form_class = PlanForm

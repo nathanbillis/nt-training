@@ -41,10 +41,13 @@
 						</div>
 						<div class="card-body">
 							<div class="row text-center text-sm-left">
-								<div class="col-12 col-sm-6">
+								<div class="col-12 col-sm-4">
 									<h5>Training Lead: <span class="small">{% render_field form.trainer class+="custom-select" %}</span></h5>
 								</div>
-								<div class="col-12 col-sm-6 text-md-right">
+								<div class="col-12 col-sm-4">
+									<h5>Session Slots: <span class="small">{% render_field form.slots class+="custom-select" style="max-width: 30%;" %}</span></h5>
+								</div>
+								<div class="col-12 col-sm-4 text-md-right">
 									<h5>Date: {% render_field form.date class+="form-control" %}</h5>
 								</div>
 							</div>
