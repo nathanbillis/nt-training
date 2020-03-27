@@ -1,7 +1,10 @@
 # Tags relating to planned sessions primarily.
-
 from django import template
-from ..models import Icon, Person, Training_spec, Planned_session
+
+from ..models import Icon
+from ..models import Person
+from ..models import Planned_session
+from ..models import Training_spec
 
 register = template.Library()
 

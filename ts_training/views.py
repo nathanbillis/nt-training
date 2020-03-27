@@ -1,31 +1,46 @@
 import datetime
 
-# Django includes
-from django.contrib import messages, auth
-from django.contrib.auth.models import User
+from django.contrib import auth
+from django.contrib import messages
 from django.contrib.auth import views as auth_views
-from django.contrib.auth.signals import user_logged_in, user_logged_out
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import User
+from django.contrib.auth.signals import user_logged_in
+from django.contrib.auth.signals import user_logged_out
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import F
 from django.db.models.functions import Lower
 from django.forms.models import modelformset_factory
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.http import Http404
+from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.template import loader
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
+from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import generic
 from django.views.generic.base import RedirectView
-from django.views.generic.edit import FormView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import DeleteView
+from django.views.generic.edit import FormView
+from django.views.generic.edit import UpdateView
 
+from .forms import PlanForm
+from .forms import SessionForm
+from .forms import SignupForm
+from .models import Icon
+from .models import Person
+from .models import Planned_session
+from .models import Training_session
+from .models import Training_spec
+# Django includes
 # DB Includes
-from .models import Icon, Person, Training_session, Training_spec, Planned_session
-
 # Forms
-from .forms import SessionForm, PlanForm, SignupForm
 
 # NNT Training Views
 

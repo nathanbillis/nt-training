@@ -1,14 +1,17 @@
 from django import forms
-from django.db import models
 from django.contrib import admin
-from django.forms import CheckboxSelectMultiple
-from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.models import Group
+from django.db import models
+from django.forms import CheckboxSelectMultiple
 
+from .models import Icon
+from .models import Person
+from .models import Planned_session
+from .models import Training_session
+from .models import Training_spec
 from ts_training.models import Person
-
-from .models import Icon, Person, Training_session, Training_spec, Planned_session
 
 # This section deals with the custom User type
 # User Forms
