@@ -11,30 +11,38 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ts_training', '0006_auto_20200319_1658'),
+        ("ts_training", "0006_auto_20200319_1658"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Planned_session',
+            name="Planned_session",
             fields=[
-                ('id', models.AutoField(auto_created=True,
-                                        primary_key=True, serialize=False, verbose_name='ID')),
-                ('slots', models.IntegerField(default=0)),
-                ('date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('trainer', models.ForeignKey(
-                    on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
-                ('trainingId', models.ManyToManyField(
-                    to='ts_training.Training_spec')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("slots", models.IntegerField(default=0)),
+                ("date", models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "trainer",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.DO_NOTHING,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                ("trainingId", models.ManyToManyField(to="ts_training.Training_spec")),
             ],
         ),
-        migrations.RemoveField(
-            model_name='training_session',
-            name='occured',
-        ),
+        migrations.RemoveField(model_name="training_session", name="occured",),
         migrations.AlterField(
-            model_name='training_session',
-            name='trainingId',
-            field=models.ManyToManyField(to='ts_training.Training_spec'),
+            model_name="training_session",
+            name="trainingId",
+            field=models.ManyToManyField(to="ts_training.Training_spec"),
         ),
     ]

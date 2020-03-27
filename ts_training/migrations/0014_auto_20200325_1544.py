@@ -7,24 +7,25 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ts_training', '0013_auto_20200325_1521'),
+        ("ts_training", "0013_auto_20200325_1521"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='planned_session',
-            name='signed_up',
+            model_name="planned_session",
+            name="signed_up",
             field=models.ManyToManyField(
-                blank=True, related_name='signed_up', to=settings.AUTH_USER_MODEL),
+                blank=True, related_name="signed_up", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AlterField(
-            model_name='planned_session',
-            name='trainingId',
-            field=models.ManyToManyField(to='ts_training.Training_spec'),
+            model_name="planned_session",
+            name="trainingId",
+            field=models.ManyToManyField(to="ts_training.Training_spec"),
         ),
         migrations.AlterField(
-            model_name='training_session',
-            name='trainingId',
-            field=models.ManyToManyField(to='ts_training.Training_spec'),
+            model_name="training_session",
+            name="trainingId",
+            field=models.ManyToManyField(to="ts_training.Training_spec"),
         ),
     ]

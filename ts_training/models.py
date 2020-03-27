@@ -16,36 +16,22 @@ class Icon(models.Model):
     itemType = models.CharField(
         max_length=15,
         verbose_name="Item Type",
-        choices=(
-            ('PAGE', 'Page'),
-            ('CAT', 'Training Category'),
-        ),
+        choices=(("PAGE", "Page"), ("CAT", "Training Category"),),
     )
-    iconRef = models.CharField(
-        max_length=25,
-        verbose_name="Font Awesome Icon for Item"
-    )
+    iconRef = models.CharField(max_length=25, verbose_name="Font Awesome Icon for Item")
     iconRef.short_description = "Icon Code"
-    iconName = models.CharField(max_length=25,
-                                verbose_name="Item Name")
+    iconName = models.CharField(max_length=25, verbose_name="Item Name")
     weight = models.IntegerField(verbose_name="Item Number")
     primary = models.BooleanField(default=False)
-    description = models.TextField(
-        null=True,
-        blank=True,
-    )
-    viewName = models.CharField(
-        max_length=25,
-        null=True,
-        blank=True,
-        default=None
-    )
+    description = models.TextField(null=True, blank=True,)
+    viewName = models.CharField(max_length=25, null=True, blank=True, default=None)
 
     def __str__(self):
-        if self.itemType == 'PAGE':
+        if self.itemType == "PAGE":
             return self.iconName  # + ' (' + str(self.weight) + ')'
-        elif self.itemType == 'CAT':
-            return str(self.weight) + '. ' + self.iconName
+        elif self.itemType == "CAT":
+            return str(self.weight) + ". " + self.iconName
+
 
 # Manager class to work with Person class
 
@@ -57,11 +43,9 @@ class PersonManager(BaseUserManager):
         first and last name and password.
         """
         if not email:
-            raise ValueError('Users must have an email address')
+            raise ValueError("Users must have an email address")
 
-        user = self.model(
-            email=self.normalize_email(email),
-        )
+        user = self.model(email=self.normalize_email(email),)
 
         user.set_password(password)
         user.save(using=self._db)
@@ -72,10 +56,7 @@ class PersonManager(BaseUserManager):
         Creates and Saves a superuser with given email, 
         first and last name and password.
         """
-        user = self.create_user(
-            email,
-            password
-        )
+        user = self.create_user(email, password)
         user.is_admin = True
         user.save(using=self._db)
         return user
@@ -88,9 +69,7 @@ class Person(AbstractBaseUser):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField(
-        verbose_name='email address',
-        max_length=255,
-        unique=True,
+        verbose_name="email address", max_length=255, unique=True,
     )
 
     grad_year = models.IntegerField(null=True, blank=True,)
@@ -98,19 +77,11 @@ class Person(AbstractBaseUser):
 
     status = models.CharField(
         max_length=15,
-        choices=(
-            ('GRAD', 'Graduated'),
-            ('STU', 'Student'),
-            ('UNKNOWN', 'Unknown')
-        ),
+        choices=(("GRAD", "Graduated"), ("STU", "Student"), ("UNKNOWN", "Unknown")),
         null=False,
-        default='UNKNOWN'
+        default="UNKNOWN",
     )
-    slug = models.SlugField(
-        max_length=100,
-        null=True,
-        unique=True,
-    )
+    slug = models.SlugField(max_length=100, null=True, unique=True,)
     slug.short_description = "Name"
 
     is_active = models.BooleanField(default=True)
@@ -120,7 +91,7 @@ class Person(AbstractBaseUser):
     objects = PersonManager()
 
     # Username is email address
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = "email"
 
     def __str__(self):
         return self.get_full_name()
@@ -142,10 +113,10 @@ class Person(AbstractBaseUser):
         return self.is_admin
 
     class Meta:
-        ordering = ['last_name', 'first_name']
+        ordering = ["last_name", "first_name"]
 
     def get_full_name(self):
-        return self.first_name + ' ' + self.last_name
+        return self.first_name + " " + self.last_name
 
     def get_short_name(self):
         return self.first_name
@@ -154,20 +125,17 @@ class Person(AbstractBaseUser):
 # Training Specification
 class Training_spec(models.Model):
     trainingId = models.DecimalField(
-        verbose_name="Spec ID Number",
-        max_digits=4,
-        decimal_places=2,
-        unique=True,
+        verbose_name="Spec ID Number", max_digits=4, decimal_places=2, unique=True,
     )
-    category = models.ForeignKey(Icon,
-                                 limit_choices_to={'itemType': 'CAT'}, on_delete=models.CASCADE)
-    trainingTitle = models.CharField(verbose_name="Training Title",
-                                     max_length=50)
+    category = models.ForeignKey(
+        Icon, limit_choices_to={"itemType": "CAT"}, on_delete=models.CASCADE
+    )
+    trainingTitle = models.CharField(verbose_name="Training Title", max_length=50)
     description = models.TextField(default="Provide a useful description")
     safety = models.BooleanField(default=False)
 
     def __str__(self):
-        humanTitle = str(self.trainingId) + ' - ' + self.trainingTitle
+        humanTitle = str(self.trainingId) + " - " + self.trainingTitle
         return humanTitle
 
 
@@ -178,11 +146,10 @@ Training_spec.short_description = "Training Specification"
 class Training_session(models.Model):
     trainingId = models.ManyToManyField(Training_spec)
     trainer = models.ForeignKey(
-        Person, on_delete=models.DO_NOTHING, related_name="trainer")
-    trainee = models.ManyToManyField(Person, related_name="trainee")
-    date = models.DateField(
-        default=datetime.date.today
+        Person, on_delete=models.DO_NOTHING, related_name="trainer"
     )
+    trainee = models.ManyToManyField(Person, related_name="trainee")
+    date = models.DateField(default=datetime.date.today)
 
     # @property
     # def __str__(self):
@@ -195,10 +162,11 @@ class Training_session(models.Model):
     #    return string
 
     def get_absolute_url(self):
-        return reverse('ts_training:ntSessions', kwargs={'pk': self.pk})
+        return reverse("ts_training:ntSessions", kwargs={"pk": self.pk})
 
     def get_students(self):
-        return self.trainee.all().filter(status='STU')
+        return self.trainee.all().filter(status="STU")
+
 
 # Planned Session
 
@@ -207,11 +175,8 @@ class Planned_session(models.Model):
     trainingId = models.ManyToManyField(Training_spec)
     trainer = models.ForeignKey(Person, on_delete=models.DO_NOTHING)
     slots = models.IntegerField(default=0, verbose_name="Available Slots")
-    date = models.DateTimeField(
-        default=timezone.now
-    )
-    signed_up = models.ManyToManyField(
-        Person, related_name="signed_up", blank=True)
+    date = models.DateTimeField(default=timezone.now)
+    signed_up = models.ManyToManyField(Person, related_name="signed_up", blank=True)
     # @property
     # def __str__(self):
     #    words = 'Session has ' + str(self.slots)  + ' slots available on ' + str(self.date)
