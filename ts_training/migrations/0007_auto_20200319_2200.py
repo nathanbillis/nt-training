@@ -18,11 +18,14 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Planned_session',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('slots', models.IntegerField(default=0)),
                 ('date', models.DateTimeField(default=django.utils.timezone.now)),
-                ('trainer', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
-                ('trainingId', models.ManyToManyField(to='ts_training.Training_spec')),
+                ('trainer', models.ForeignKey(
+                    on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
+                ('trainingId', models.ManyToManyField(
+                    to='ts_training.Training_spec')),
             ],
         ),
         migrations.RemoveField(

@@ -16,7 +16,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='planned_session',
             name='signed_up',
-            field=models.ManyToManyField(related_name='signed_up', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(
+                related_name='signed_up', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='planned_session',
