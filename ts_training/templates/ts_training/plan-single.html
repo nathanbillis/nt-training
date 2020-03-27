@@ -1,0 +1,125 @@
+{% extends 'ts_training/base.html' %}
+{% load nt_navbar %}
+{% load nt_spec %}
+{% load nt_people %}
+{% load nt_filters %}
+{% load widget_tweaks %}
+{% block title %}Session {{ object.pk }}{% endblock %}
+
+{% block content %}
+{% for field in form %}
+	{% if field.errors %}
+		<div class="alert alert-danger alert-dismissable" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			<i class="fa fa-fw fa-exclamation-circle"></i> <strong>{{ field.label_tag|title }}</strong>
+			{{ field.errors|last }} {# Use defined validation error, not Django's #}</div>
+	{% endif %}
+{% endfor %}
+
+	<div class="card">
+		<div class="card-header bg-primary">
+			<div class="row">
+				<div class="col-sm-3 col-12 my-2 my-sm-0 text-center text-sm-left">
+			    <a href="{% url 'ts_training:ntPlan' %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-list"></i> <span class="d-sm-none d-lg-inline">View all sessions</span></a>
+			  </div>
+				<div class="col-sm-6 col-12 text-center mt-1">
+					<h3 class="">Planned Session on {{ object.date }}</h3>
+				</div>
+				{% if user.is_admin %}
+				  <div class="col-sm-3 col-12 text-center text-sm-right my-2 my-sm-0">
+				    <a href="{% url 'ts_training:ntPlanEdit' object.pk %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-pencil"></i> <span class="d-sm-none d-lg-inline">Edit</span></a>
+				  </div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="card-body">
+			<div class="row mb-4">
+				<div class="col">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h4><i class="fa fa-fw fa-info nt-orange"></i> Session Info</h4>
+						</div>
+						<div class="card-body">
+							<div class="row text-center text-sm-left">
+								<div class="col-12 col-sm-4">
+									<h5>Training Lead: <a href="{% url 'ts_training:ntPerson' object.trainer.slug %}">{{ object.trainer }}</a></h5>
+								</div>
+								<div class="col-12 col-sm-4">
+									<h5>Available Slots: {{object.slots}}</h5>
+								</div>
+								<div class="col-12 col-sm-4 text-md-right">
+									<h5>Date: {{ object.date }}</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row mb-4">
+				<div class="col">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h4><i class="fa fa-fw fa-list nt-orange"></i> Training Points to be Covered</h4>
+						</div>
+						<div class="card-body">
+							{% training_cards session_boxes=object.trainingId.all %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% if user.is_admin %}
+				<div class="row mb-4">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header bg-primary">
+								<h4><i class="fa fa-fw fa-users nt-orange"></i> Signed Up People</h4>
+							</div>
+							<div class="card-body">
+								{% with object.signed_up.all as people %}
+									{% if people is None %}
+										<p> Noone has signed up yet!</p>
+									{% else %}
+										<!-- People -->
+										<div class="row" id="peopleList">
+											{% for person in people %}
+												<div class="col-xl-3 col-lg-4 col-6 button-people person-{{ person.status }} {% if person.committee == True %}person-committee{% endif %}">
+													<a href="{% url 'ts_training:ntPerson' person.slug %}" class="btn btn-primary btn-block">
+														<h6 class="lead"><i class="fa fa-fw {% if person.status == 'GRAD' %}fa-graduation-cap{% elif person.committee == True %}fa-committee fa-star{% else %}fa-user{% endif %} float-md-left mt-md-1"></i>&nbsp;{{ person }}</h6>
+													</a>
+												</div>
+											{% endfor %}
+										</div>
+									{% endif %}
+								{% endwith %}
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+			{% if not user == object.trainer %}
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header bg-primary">
+							<h4><i class="fa fa-fw fa-users nt-orange"></i> Sign Up</h4>
+						</div>
+						<div class="card-body mx-auto">
+							{% if not user in object.signed_up.all%}
+								{% if object.slots > 0 %}
+									<a href="{% url 'ts_training:ntSignup' object.pk %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-clipboard"></i> <span class="d-sm-none d-lg-inline">Sign Up</span></a>
+								{% else %}
+									<p>This training session is full. Please sign up for another session.</p>
+								{% endif %}
+							{% else %}
+								<p> You are already signed up to this session</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+			{% else %}
+
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

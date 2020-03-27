@@ -15,7 +15,7 @@
 				<div class="alert alert-danger col-8 mx-auto" role="alert"><i class="fa fa-exclamation fa-fw"></i> Incorrect username or password. Please try again.</div>
 			</div>
 		{% endif %}
-		{% if next %} 
+		{% if next %}
 			{% if "edit" in next or "new" in next %}
 				<div class="row">
 					<div class="alert alert-warning col-8 mx-auto" role="alert"><i class="fa fa-info fa-fw"></i> You need to log in to do that. Accounts are available to TechSoc committee.</div>
@@ -44,6 +44,9 @@
 				</form>
 			</div>
 		</div>
+		<br>
+		<div class="row" >
+			<p class="mx-auto"> If you have any problems with your account, please contact the training manager</p>
+		</div>
 	{% endif %}
 {% endblock %}
-

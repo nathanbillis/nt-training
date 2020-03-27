@@ -8,12 +8,12 @@
 		<div class="card-header bg-primary">
 			<div class="row">
 				<div class="col-sm-3 col-12 my-2 my-sm-0 text-center text-sm-left">
-			    <a href="{% url 'ts_training:all' %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-list"></i> <span class="d-sm-none d-lg-inline">View all sessions</span></a>
+			    <a href="{% url 'ts_training:ntSessions' %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-list"></i> <span class="d-sm-none d-lg-inline">View all sessions</span></a>
 			  </div>
 				<div class="col-sm-6 col-12 text-center mt-1">
 					<h3 class="">Training Session {{ object.pk }}</h3>
 				</div>
-				{% if user.is_authenticated %}
+				{% if user.is_admin %}
 				  <div class="col-sm-3 col-12 text-center text-sm-right my-2 my-sm-0">
 				    <a href="{% url 'ts_training:ntSessionEdit' object.pk %}" class="btn btn-secondary btn-lg"><i class="fa fa-fw fa-lg fa-pencil"></i> <span class="d-sm-none d-lg-inline">Edit</span></a>
 				  </div>
@@ -63,7 +63,7 @@
 								{% with object.trainee.all as people %}
 									{% include 'ts_training/include/people-list.html' %}
 								{% endwith %}
-								
+
 						</div>
 					</div>
 				</div>

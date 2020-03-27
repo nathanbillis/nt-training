@@ -1,35 +1,38 @@
 {% comment %}
-<!-- 
+<!--
 Jump labels
 
-Category cards 
-	If person: counters, colour bands (expands), modals 
-	If session: counters, colour bands (expands), modals 
+Category cards
+	If person: counters, colour bands (expands), modals
+	If session: counters, colour bands (expands), modals
 	If session form: checkboxes, select all
 	Else (ie, training): modals
 
-From nt_spec.py: 
-	card_settings['counters'] = False # Counter labels 
+From nt_spec.py:
+	card_settings['counters'] = False # Counter labels
 	card_settings['colour_bands'] = False # Green/Red colour-coding, also implies expanding tables
-	card_settings['modals'] = False # Training point information modals 
+	card_settings['modals'] = False # Training point information modals
 	card_settings['checkboxes'] = False # When editing/creating a training session
 
---> 
+-->
 {% endcomment %}
 
 	{% load nt_spec %}
 	{% load nt_training_sessions %}
 	{% load widget_tweaks %}
 
-	{# Jump labels #} 
+	{# Jump labels #}
 	<div class="row">
 		<div class="col-12">
-			<p>Jump to: 
+			<p>Jump to:
 				{% for dept in cats %}
 					<span><a href="#{{ dept|slugify }}" title="{{ dept|slugify }}" class="filter badge badge-secondary">{{ dept|title }}</a>&nbsp;</span>
 				{% endfor %}
 			</p>
-			<p><i class="fa fa-exclamation-circle text-danger" aria-label="Exclamation point" title="Safety critical"></i> Training points with an exclamation point are safety-critical. As well as meaning more care is taken during training, they may only be signed off after a period of working under supervision.</p>
+			<p style="text-align: center;">
+				<i class="fa fa-exclamation-circle text-danger" aria-label="Exclamation point" title="Safety critical"></i>
+				Training points with an exclamation point are safety-critical. As well as meaning more care is taken during training, they may only be signed off after a period of working under supervision.
+			</p>
 		</div>
 	</div>
 
@@ -39,7 +42,7 @@ From nt_spec.py:
 
 		<div class="col-12 col-xl-4 col-lg-6">
 			<div class="card mb-4">
-				<div class="card-header bg-primary {% if card_settings.colour_bands == True %}expandPanel clickme{% endif %}" 
+				<div class="card-header bg-primary {% if card_settings.colour_bands == True %}expandPanel clickme{% endif %}"
 					id="expand-{{ dept|slugify }}" data-toggle="tooltip" data-placement="top" title="{{ dept.description }}">
 					<h5 class="lead mb-0">
 						<a name="{{ dept|slugify }}"></a><i class="fa fa-fw fa-{{ dept.iconRef }} nt-orange mb-1 mb-sm-0"></i>&nbsp;{{ dept }}
@@ -69,8 +72,8 @@ From nt_spec.py:
 					{% for item in training %}
 						{% if item.category == dept %}
 							<tr class="
-								{{ dept|slugify }} 
-								{% if card_settings.modals == True %}clickme modal-href{% endif %} 
+								{{ dept|slugify }}
+								{% if card_settings.modals == True %}clickme modal-href{% endif %}
 								{% if card_settings.colour_bands == True %}
 									{% if item.trainingId in person_achieved_points or item in session_boxes %}
 										table-success
@@ -78,14 +81,14 @@ From nt_spec.py:
 										table-danger d-none
 									{% endif %}
 								{% endif %}"
-								id="{{item.pk}}">								
+								id="{{item.pk}}">
 								<td>
 									{% if card_settings.checkboxes == True %}
 										<input type="checkbox" name="trainingId" value="{{ item.pk }}" id="id_trainingId_{{ forloop.counter }}" class="form-controls checkbox-{{dept|slugify}}"
 										{# String required for a failed form; int required for first edit #}
 										{% if item.pk|stringformat:"i" in form.trainingId.value or item.pk in form.trainingId.value %}
 											checked=""
-										{% endif %}> 
+										{% endif %}>
 									{% endif %}
 									{{ item.trainingId }}
 								</td>
