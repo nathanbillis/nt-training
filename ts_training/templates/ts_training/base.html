@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<!-- <head> section of pages -->
-	<head> 
+	<head>
 	  <meta charset="utf-8">
 	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,7 +48,7 @@
 
 
 		    <div id="navbar" class="collapse navbar-collapse justify-content-end">
-		      <!-- Login buttons and dropdown --> 
+		      <!-- Login buttons and dropdown -->
 		      <ul class="navbar-nav order-md-2 ml-0">
 		      	{% if user.is_authenticated %}
 		      	<div class="dropdown">
@@ -73,7 +73,7 @@
 		      </ul>
 		    </div><!--/.nav-collapse -->
 		  </div>
-		</nav>	
+		</nav>
 		<!-- End nav bar -->
 
 		<div class="container">
@@ -138,7 +138,7 @@
 					  if (this.id == 'clear') {
 					    $('#peopleList > div').removeClass('d-none');
 					    $('#peopleList > div.clearfixjs').addClass('clearfix');
-					  } 
+					  }
 					  else {
 					    var $el = $('.person-' + this.id).removeClass('d-none');
 					    $('#peopleList > div').not($el).addClass('d-none');
@@ -179,7 +179,7 @@
 				});
 			</script>
 
-			<!-- Expand hidden card rows --> 
+			<!-- Expand hidden card rows -->
 			<script>
 				$(document).ready(function () { // When expand is clicked, this card's hidden rows are unhidden
 				    $(".expandPanel").click(function () {
@@ -199,8 +199,8 @@
 					});
 					$("#traineesClear").click(function () {
 						$('input[id^="id_trainee_"]:checked').prop('checked',false);
-						$(".button-checkbox.active").removeClass("active"); // Remove .active class 
-						$(".button-checkbox-icon.fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");; // Remove .active class 
+						$(".button-checkbox.active").removeClass("active"); // Remove .active class
+						$(".button-checkbox-icon.fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");; // Remove .active class
 					});
 				});
 			</script>
@@ -211,8 +211,8 @@
 					});
 					$("#signupClear").click(function () {
 						$('input[id^="id_signed_up_"]:checked').prop('checked',false);
-						$(".button-checkbox.active").removeClass("active"); // Remove .active class 
-						$(".button-checkbox-icon.fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");; // Remove .active class 
+						$(".button-checkbox.active").removeClass("active"); // Remove .active class
+						$(".button-checkbox-icon.fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");; // Remove .active class
 					});
 				});
 			</script>
@@ -227,7 +227,7 @@
 							$(deptCheckboxes).prop('checked',true);
 							isChecked = true;
 						}
-						else { 
+						else {
 							$(deptCheckboxes).prop('checked',false);
 							isChecked = false;
 						}
@@ -236,8 +236,8 @@
 			</script>
 			<!-- Form: Use .active instead of checkbox checked -->
 			<script>
-				$(document).ready(function () { 
-					// Go through and add .active to the initially checked boxes 
+				$(document).ready(function () {
+					// Go through and add .active to the initially checked boxes
 					checkboxes = document.getElementsByName("trainee");
 					checkedboxes = [];
 					for (var i=0; i<checkboxes.length; i++){
@@ -251,21 +251,21 @@
 			</script>
 			<script>
 				$('input[name="trainee"]').change(function(){
-					// Add .active when the checked status changes 
+					// Add .active when the checked status changes
 				    if($(this).is(':checked')) {
 				    	// Box gets checked
 				      $(this).closest(".button-checkbox").addClass('active');
 				      $(this).closest(".person-checkbox").nextAll(".fa-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");
 				    } else {
-				    	// Unchecked 
+				    	// Unchecked
 				      $(this).closest(".button-checkbox").removeClass('active');
 				      $(this).closest(".person-checkbox").nextAll(".fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");
 				    }
 				});
 			</script>
 			<script>
-				$(document).ready(function () { 
-					// Go through and add .active to the initially checked boxes 
+				$(document).ready(function () {
+					// Go through and add .active to the initially checked boxes
 					checkboxes = document.getElementsByName("signed_up");
 					checkedboxes = [];
 					for (var i=0; i<checkboxes.length; i++){
@@ -279,13 +279,13 @@
 			</script>
 			<script>
 				$('input[name="signed_up"]').change(function(){
-					// Add .active when the checked status changes 
+					// Add .active when the checked status changes
 				    if($(this).is(':checked')) {
 				    	// Box gets checked
 				      $(this).closest(".button-checkbox").addClass('active');
 				      $(this).closest(".person-checkbox").nextAll(".fa-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");
 				    } else {
-				    	// Unchecked 
+				    	// Unchecked
 				      $(this).closest(".button-checkbox").removeClass('active');
 				      $(this).closest(".person-checkbox").nextAll(".fa-check-circle-o").toggleClass("fa-check-circle-o").toggleClass("fa-circle-o");
 				    }
@@ -295,4 +295,3 @@
 
 	</body>
 </html>
-

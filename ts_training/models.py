@@ -39,7 +39,7 @@ class Icon(models.Model):
 class PersonManager(BaseUserManager):
     def create_user(self, email, password=None):
         """
-        Creates and Saves a User with given email, 
+        Creates and Saves a User with given email,
         first and last name and password.
         """
         if not email:
@@ -53,7 +53,7 @@ class PersonManager(BaseUserManager):
 
     def create_superuser(self, email, password=None):
         """
-        Creates and Saves a superuser with given email, 
+        Creates and Saves a superuser with given email,
         first and last name and password.
         """
         user = self.create_user(email, password)
