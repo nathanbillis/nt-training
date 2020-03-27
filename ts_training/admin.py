@@ -23,9 +23,8 @@ fields, plus a repeated password."""
 
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
 
-    password2 = forms.CharField(
-        label="Password confirmation", widget=forms.PasswordInput
-    )
+    password2 = forms.CharField(label="Password confirmation",
+                                widget=forms.PasswordInput)
 
     class Meta:
         model = Person
@@ -103,18 +102,30 @@ class PersonAdmin(BaseUserAdmin):
         "committee",
     )
     fieldsets = (
-        (None, {"fields": ("email", "password", "slug")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "grad_year")}),
-        ("Society info", {"fields": ("status", "committee",)}),
-        ("Permissions", {"fields": ("is_admin",)}),
+        (None, {
+            "fields": ("email", "password", "slug")
+        }),
+        ("Personal info", {
+            "fields": ("first_name", "last_name", "grad_year")
+        }),
+        ("Society info", {
+            "fields": (
+                "status",
+                "committee",
+            )
+        }),
+        ("Permissions", {
+            "fields": ("is_admin", )
+        }),
     )
 
-    add_fieldsets = (
-        (None, {"classes": ("wide",), "fields": ("email", "password1", "password2"),}),
-    )
+    add_fieldsets = ((None, {
+        "classes": ("wide", ),
+        "fields": ("email", "password1", "password2"),
+    }), )
 
-    search_fields = ("email",)
-    ordering = ("email",)
+    search_fields = ("email", )
+    ordering = ("email", )
     filter_horizontal = ()
 
 
@@ -123,7 +134,9 @@ class PersonAdmin(BaseUserAdmin):
 
 class TrainingSpecAdmin(admin.ModelAdmin):
     list_filter = ["category"]
-    list_display = ["trainingId", "category", "trainingTitle", "description", "safety"]
+    list_display = [
+        "trainingId", "category", "trainingTitle", "description", "safety"
+    ]
 
     def toggle_safety(modeladmin, request, queryset):
         for item in queryset:
@@ -146,13 +159,15 @@ class TrainingSessionAdmin(admin.ModelAdmin):
         "date",
     ]
     formfield_overrides = {
-        models.ManyToManyField: {"widget": CheckboxSelectMultiple},
+        models.ManyToManyField: {
+            "widget": CheckboxSelectMultiple
+        },
     }
     list_filter = ["date", "trainee", "trainer"]
 
 
 class IconAdmin(admin.ModelAdmin):
-    prepopulated_fields = {"description": ("iconName",)}
+    prepopulated_fields = {"description": ("iconName", )}
     list_display = ["itemType", "weight", "iconName", "iconRef"]
     list_filter = ["itemType"]
 
@@ -164,7 +179,9 @@ class PlannedAdmin(admin.ModelAdmin):
         "slots",
     ]
     formfield_overrides = {
-        models.ManyToManyField: {"widget": CheckboxSelectMultiple},
+        models.ManyToManyField: {
+            "widget": CheckboxSelectMultiple
+        },
     }
     list_filter = ["date"]
 

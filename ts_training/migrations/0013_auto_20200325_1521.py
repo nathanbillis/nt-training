@@ -10,7 +10,10 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(model_name="planned_session", name="signup",),
+        migrations.RemoveField(
+            model_name="planned_session",
+            name="signup",
+        ),
         migrations.AlterField(
             model_name="planned_session",
             name="trainingId",

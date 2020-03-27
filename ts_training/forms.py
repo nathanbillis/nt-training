@@ -41,19 +41,17 @@ class SessionForm(forms.ModelForm):
         errors = {}
         # Can't submit without a valid trainer or date, so don't need to validate those.
         if trainee is None:
-            errors["trainee"] = forms.ValidationError("Please select some trainees.")
+            errors["trainee"] = forms.ValidationError(
+                "Please select some trainees.")
         if training_id is None:
             errors["training_id"] = forms.ValidationError(
                 "You can't have a session without something to learn."
-                " Please select some training points."
-            )
+                " Please select some training points.")
         if trainee is not None:
-            if (
-                trainer in trainee.all()
-            ):  # But the trainer should not be in the list of trainees.
+            if (trainer in trainee.all()
+                ):  # But the trainer should not be in the list of trainees.
                 errors["trainer"] = forms.ValidationError(
-                    "The trainer can't train themselves!"
-                )
+                    "The trainer can't train themselves!")
 
         if errors:
             raise forms.ValidationError(errors)
@@ -90,8 +88,7 @@ class PlanForm(forms.ModelForm):
         if training_id is None:
             errors["training_id"] = forms.ValidationError(
                 "You can't have a session without something to learn."
-                " Please select some training points."
-            )
+                " Please select some training points.")
 
         if errors:
             raise forms.ValidationError(errors)

@@ -13,7 +13,8 @@ urlpatterns = [
     # /logout
     url(r"^logout/$", views.NTLogoutView.as_view(), name="ntLogout"),
     # /user
-    url(r"^user/done/$", views.NTUserEditDone.as_view(), name="ntUserEditDone"),
+    url(r"^user/done/$", views.NTUserEditDone.as_view(),
+        name="ntUserEditDone"),
     url(r"^user/$", views.NTUserEdit.as_view(), name="ntUserEdit"),
     # /
     url(r"^$", views.HomeView.as_view(), name="ntHome"),
@@ -21,7 +22,9 @@ urlpatterns = [
     # /people
     url(r"^people/$", views.PeopleView.as_view(), name="ntPeople"),
     # /people/slug
-    url(r"^people/(?P<slug>[\w\-]+)/$", views.PersonView.as_view(), name="ntPerson"),
+    url(r"^people/(?P<slug>[\w\-]+)/$",
+        views.PersonView.as_view(),
+        name="ntPerson"),
     # Training Spec Views
     # /training
     url(r"^training/$", views.TrainingView.as_view(), name="ntCategory"),
@@ -33,7 +36,8 @@ urlpatterns = [
     ),
     # Training Session Views
     # /training/session (List view)
-    url(r"^training/session/$", views.SessionView.as_view(), name="ntSessions"),
+    url(r"^training/session/$", views.SessionView.as_view(),
+        name="ntSessions"),
     # /training/session/id (Single view)
     url(
         r"^training/session/(?P<pk>[0-9]+)/$",
@@ -58,7 +62,8 @@ urlpatterns = [
         name="ntPlanSingle",
     ),
     # /training/plan/new
-    url(r"^training/plan/new/$", views.PlanNewView.as_view(), name="ntPlanNew"),
+    url(r"^training/plan/new/$", views.PlanNewView.as_view(),
+        name="ntPlanNew"),
     # /training/plan/id/edit
     url(
         r"^training/plan/(?P<pk>[0-9]+)/edit/$",

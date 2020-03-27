@@ -19,12 +19,8 @@ def ordered_set(seq):
 @register.simple_tag
 def person_trained(person):
     # Returns a list of training sessions in which the person is a trainer
-    trained = (
-        Planned_session.objects.filter(trainer=person)
-        .order_by("date")
-        .prefetch_related("trainingId")
-        .prefetch_related("signed_up")
-    )
+    trained = (Planned_session.objects.filter(trainer=person).order_by(
+        "date").prefetch_related("trainingId").prefetch_related("signed_up"))
     return trained
 
 
@@ -32,13 +28,13 @@ def person_trained(person):
 def session_cats(session):
     # Returns the list of categories covered in a given training session
     ids = session.trainingId.order_by("trainingId").select_related(
-        "category"
-    )  # Get points
+        "category")  # Get points
     session_cat_list = []  # For population later
     for trainingid in ids:
         session_cat_list.append(trainingid.category.iconRef)
 
-    session_cat_list = ordered_set(session_cat_list)  # Preserve numerical order
+    session_cat_list = ordered_set(
+        session_cat_list)  # Preserve numerical order
     allcats = Icon.objects.filter(itemType="CAT")
     session_cat_dict = {}  # Dictionary for use in templates
     for cat in session_cat_list:

@@ -14,7 +14,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="planned_session",
             name="slots",
-            field=models.IntegerField(default=0, verbose_name="Available Slots"),
+            field=models.IntegerField(default=0,
+                                      verbose_name="Available Slots"),
         ),
         migrations.AlterField(
             model_name="planned_session",

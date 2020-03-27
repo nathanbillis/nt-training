@@ -29,7 +29,8 @@ class Migration(migrations.Migration):
                     ),
                 ),
                 ("slots", models.IntegerField(default=0)),
-                ("date", models.DateTimeField(default=django.utils.timezone.now)),
+                ("date",
+                 models.DateTimeField(default=django.utils.timezone.now)),
                 (
                     "trainer",
                     models.ForeignKey(
@@ -37,10 +38,14 @@ class Migration(migrations.Migration):
                         to=settings.AUTH_USER_MODEL,
                     ),
                 ),
-                ("trainingId", models.ManyToManyField(to="ts_training.Training_spec")),
+                ("trainingId",
+                 models.ManyToManyField(to="ts_training.Training_spec")),
             ],
         ),
-        migrations.RemoveField(model_name="training_session", name="occured",),
+        migrations.RemoveField(
+            model_name="training_session",
+            name="occured",
+        ),
         migrations.AlterField(
             model_name="training_session",
             name="trainingId",

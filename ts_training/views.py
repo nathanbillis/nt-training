@@ -74,9 +74,8 @@ class PeopleView(generic.ListView):
         # Get all the people. Lower required to allow for mixed-case in DB
         context["people"] = Person.objects.all()
         # Get the training categories
-        context["cats"] = (
-            Icon.objects.filter(itemType="CAT").order_by("weight").only("iconName")
-        )
+        context["cats"] = (Icon.objects.filter(
+            itemType="CAT").order_by("weight").only("iconName"))
         return context
 
 
@@ -139,9 +138,8 @@ class SessionEditView(SuccessMessageMixin, UpdateView):
     success_message = "Session edited successfully."
 
     def get_success_url(self):
-        return reverse_lazy(
-            "ts_training:ntSessionSingle", kwargs={"pk": self.object.pk}
-        )
+        return reverse_lazy("ts_training:ntSessionSingle",
+                            kwargs={"pk": self.object.pk})
 
 
 # Plans
@@ -173,9 +171,8 @@ class PlanNewView(SuccessMessageMixin, CreateView):
     success_message = "Session created successfully."
 
     def get_success_url(self):
-        return reverse_lazy(
-            "ts_training:ntSessionSingle", kwargs={"pk": self.object.pk}
-        )
+        return reverse_lazy("ts_training:ntSessionSingle",
+                            kwargs={"pk": self.object.pk})
 
 
 @method_decorator(login_required, name="dispatch")
@@ -187,7 +184,8 @@ class PlanEditView(SuccessMessageMixin, UpdateView):
     success_message = "Session edited successfully."
 
     def get_success_url(self):
-        return reverse_lazy("ts_training:ntPlanSingle", kwargs={"pk": self.object.pk})
+        return reverse_lazy("ts_training:ntPlanSingle",
+                            kwargs={"pk": self.object.pk})
 
 
 @method_decorator(login_required, name="dispatch")
@@ -198,7 +196,8 @@ class SignupView(SuccessMessageMixin, UpdateView):
     success_message = "You are Signed up"
 
     def get_success_url(self):
-        return reverse_lazy("ts_training:ntPlanSingle", kwargs={"pk": self.object.pk})
+        return reverse_lazy("ts_training:ntPlanSingle",
+                            kwargs={"pk": self.object.pk})
 
 
 # Auth Views
